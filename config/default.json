@@ -1,0 +1,3 @@
+{
+    "mongoURI": "mongodb+srv://utsav:utsav123@cluster0.1kd6t.mongodb.net/merncrud?retryWrites=true&w=majority"
+}
