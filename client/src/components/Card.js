@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { useState } from "react"
 import './card.css';
 import axios from 'axios'
@@ -16,6 +17,19 @@ const Card = (props) => {
     const { title, text, date, _id } = props.post
     const [btnPressed, setBtnPressed] = useState(false)
     const [data, setData] = useState({})
+
+    useEffect(async () => {
+        try {
+            const res = await await axios.get(`/api/posts/${_id}`)
+            setData({
+                ...data,
+                title:res.data.title,
+                text:res.data.text
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }, [])
 
     function updateData(e) {
         setData({
@@ -38,7 +52,6 @@ const Card = (props) => {
             }
             const body = JSON.stringify(x)
             const res = await axios.put(`/api/posts/${_id}`, body, config)
-            console.log(res);
         } catch (error) {
             console.error(error);
         }
@@ -63,15 +76,15 @@ const Card = (props) => {
                 <h5 className="card-title">{title}</h5>
                 <p className="card-text">{text}</p>
                 <button className="btn btn-primary" onClick={EditFunction}>{btnPressed ? "Back" : "Edit"}</button>
-                {!btnPressed && <button className="btn btn-primary"  onClick={DeleteFunction}>Delete</button>}
-                {btnPressed &&  <form>
+                {!btnPressed && <button className="btn btn-primary" onClick={DeleteFunction}>Delete</button>}
+                {btnPressed && <form>
                     <div class="form-group">
                         <label for="title">Title : </label>
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Enter title" value={data.title} onChange={updateData} required/>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Enter title" value={data.title} onChange={updateData} required />
                     </div>
                     <div class="form-group">
                         <label for="text">Text : </label>
-                        <input type="text" class="form-control" name="text" id="text" placeholder="Enter text" value={data.text} onChange={updateData} required/>
+                        <input type="text" class="form-control" name="text" id="text" placeholder="Enter text" value={data.text} onChange={updateData} required />
                     </div>
                     <button type="submit" class="btn btn-primary" onClick={updatePost}>Submit</button>
                 </form>}
@@ -83,18 +96,5 @@ const Card = (props) => {
 };
 
 export default Card;
-{/* <div className='card'>
-            <h1>{title}</h1>
-            <p>{text}</p>
-            <p>-{DateFormatter(date)}</p>
-            <button onClick={EditFunction}>{btnPressed ? "Back" : "Edit"}</button>
-            {btnPressed && <form >
-                <label for="title">Title :</label><br />
-                <input type="text" id="title" name="title" value={data.title} onChange={updateData} required /><br />
-                <label for="text">Text :</label><br />
-                <input type="text" id="text" name="text" value={data.text} onChange={updateData} required /><br /><br />
-                <input type="submit" value="Submit" onClick={updatePost} />
-            </form>}
-            {!btnPressed && <button onClick={DeleteFunction}>Delete</button>}
-        </div> */}
+
 
