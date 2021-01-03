@@ -29,16 +29,17 @@ const Navbar = () => {
 
     return (
         <div className="navbar">
+            <h1 className="header-tag">Share Your Thoughts!!!!!</h1>
             <div className="container">
                 <form>
                     <h2>Add New Post : </h2>
                     <div class="form-group">
                         <label for="title">Title : </label>
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Enter title" value={data.title} onChange={updateData} required/>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Enter title" value={data.title} onChange={updateData} required />
                     </div>
                     <div class="form-group">
                         <label for="text">Text : </label>
-                        <input type="text" class="form-control" name="text" id="text" placeholder="Enter text" value={data.text} onChange={updateData} required/>
+                        <input type="text" class="form-control" name="text" id="text" placeholder="Enter text" value={data.text} onChange={updateData} required />
                     </div>
                     <button type="submit" class="btn btn-primary" onClick={createPost}>Submit</button>
                 </form>
